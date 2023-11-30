@@ -18,8 +18,6 @@ export default {
         aoClicar() {
             this.selecionado = !this.selecionado;
 
-            console.log(this.selecionado);
-
             if(this.selecionado){
                 this.$emit("adicionarIngrediente", this.ingrediente)
             } else {

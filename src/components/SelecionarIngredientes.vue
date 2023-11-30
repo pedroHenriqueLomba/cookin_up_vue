@@ -1,6 +1,7 @@
 <script lang="ts">
 import { obterCategorias } from "@/http/index";
 import CardCategoria from "./CardCategoria.vue";
+import BotaoNavegar from "./BotaoNavegar.vue";
 import type ICategoria from "@/interfaces/ICategoria";
 
 export default {
@@ -13,9 +14,10 @@ export default {
         this.categorias = await obterCategorias();
     },
     components: {
-        CardCategoria
+        CardCategoria,
+        BotaoNavegar
     },
-    emits: ['adicionarIngrediente', 'removerIngrediente']
+    emits: ['adicionarIngrediente', 'removerIngrediente', 'buscarReceitas'],
 }
 </script>
 
@@ -31,9 +33,12 @@ export default {
                     @remover-ingrediente="$emit('removerIngrediente', $event)" />
             </li>
         </ul>
-        <p class="paragrafo dicas">
+        <p class="paragrafo">
             *Atenção, consideramos que você tenha em casa sal, pimente e água.
         </p>
+
+        <br>
+        <BotaoNavegar texto="Buscar Receita" @click="$emit('buscarReceitas')" />
     </section>
 </template>
 

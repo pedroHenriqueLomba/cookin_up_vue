@@ -1,23 +1,36 @@
 <script lang="ts">
+import BotaoNavegar from './BotaoNavegar.vue';
 import SelecionarIngredientes from './SelecionarIngredientes.vue';
 import TagIngrediente from "./TagIngrediente.vue";
+import MostrarReceitas from './MostrarReceitas.vue';
+
+type Pagina = "SelecionarIngredientes" | "MostrarReceitas"
 
 export default {
     data() {
         return {
-            ingredientes: [] as string[]
+            ingredientes: [] as string[],
+            conteudo: "SelecionarIngredientes" as Pagina
         }
     },
     components: {
         SelecionarIngredientes,
-        TagIngrediente
+        TagIngrediente,
+        BotaoNavegar,
+        MostrarReceitas
     },
     methods: {
-        adicionarIngrediente(ingrediente: string){
+        adicionarIngrediente(ingrediente: string) {
             this.ingredientes.push(ingrediente)
         },
-        removerIngrediente(ingrediente: string){
+        removerIngrediente(ingrediente: string) {
             this.ingredientes = this.ingredientes.filter(item => item !== ingrediente);
+        },
+        buscarReceitas(){
+            this.conteudo = "MostrarReceitas";
+        },
+        editarLista(){
+            this.conteudo = "SelecionarIngredientes";
         }
     }
 }
@@ -29,10 +42,10 @@ export default {
             <span class="sua-lista-texto subtitulo-lg">
                 Sua lista:
             </span>
-            
+
             <ul v-if="ingredientes.length > 0" class="ingredientes-sua-lista">
                 <li v-for="ingrediente in ingredientes" :key="ingrediente">
-                    <TagIngrediente :ingrediente="ingrediente" ativa/>
+                    <TagIngrediente :ingrediente="ingrediente" ativa />
                 </li>
             </ul>
 
@@ -42,7 +55,13 @@ export default {
             </p>
 
         </section>
-        <SelecionarIngredientes @adicionar-ingrediente="adicionarIngrediente" @remover-ingrediente="removerIngrediente"/>
+        <SelecionarIngredientes 
+        @adicionar-ingrediente="adicionarIngrediente" 
+        @remover-ingrediente="removerIngrediente" 
+        @buscar-receitas="buscarReceitas"
+        v-show="conteudo === 'SelecionarIngredientes'
+        "/>
+        <MostrarReceitas v-if="conteudo === 'MostrarReceitas'" @editar-lista="editarLista" :ingredientes="ingredientes"/>
     </main>
 </template>
 
