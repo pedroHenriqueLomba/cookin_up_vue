@@ -1,14 +1,15 @@
 <script lang="ts">
 export default {
     props: {
-        texto: {type: String, required: true}
+        ingrediente: { type: String, required: true },
+        ativa: { type: Boolean, default: false }
     }
 }
 </script>
 
 <template>
-    <span class="tag-ingrediente">
-        {{ texto }}
+    <span :class="['tag-ingrediente', {ativa}]" >
+        {{ ingrediente }}
     </span>
 </template>
 
@@ -20,6 +21,12 @@ export default {
     padding: 0.5rem;
     text-align: center;
     transition: 0.2s;
+    color: var(--cinza, #FFFAF3);
+    background: var(--cinza-claro, #F0633C);
+    font-weight: 700;
+}
+
+.tag-ingrediente.ativa {
     color: var(--creme, #FFFAF3);
     background: var(--coral, #F0633C);
     font-weight: 700;

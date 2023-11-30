@@ -1,13 +1,15 @@
 <script lang="ts">
 import type ICategoria from '@/interfaces/ICategoria';
 import type { PropType } from 'vue';
-import TagIngredientes from './TagIngredientes.vue';
+import TagIngredientes from './TagIngrediente.vue';
+import IngredienteSelecionavel from './IngredienteSelecionavel.vue';
 
 export default {
     props: {
         categoria: { type: Object as PropType<ICategoria>, required: true }
     },
-    components: { TagIngredientes }
+    components: { TagIngredientes, IngredienteSelecionavel },
+    emits: ["adicionarIngrediente", "removerIngrediente"]
 }
 </script>
 
@@ -22,7 +24,7 @@ export default {
 
             <ul class="categoria__ingredientes">
                 <li v-for="ingrediente in categoria.ingredientes" :key="ingrediente">
-                    <TagIngredientes :texto="ingrediente"/>
+                    <IngredienteSelecionavel :ingrediente="ingrediente" @adicionar-ingrediente="$emit('adicionarIngrediente', $event)" @remover-ingrediente="$emit('removerIngrediente', $event)"/>
                 </li>
             </ul>
         </header>
